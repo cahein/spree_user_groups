@@ -19,7 +19,7 @@ class Spree::Calculator::AdvancedFlatPercent < Spree::Calculator
 
     part = self.preferred_flat_percent.abs / 100.0
     item_total = object.line_items.map(&:amount).sum
-    
+
     if self.preferred_based_on_cost_price
       item_cost_price_total = object.line_items.map do |li|
         if !li.variant.cost_price.nil? && li.variant.cost_price > 0
@@ -33,18 +33,18 @@ class Spree::Calculator::AdvancedFlatPercent < Spree::Calculator
       (item_total * (-part)).round(2)
     end
   end
-  
-  def compute_item(variant)
+
+  def compute_item(variant, original_price)
     part = self.preferred_flat_percent.abs / 100.0
-    
+
     if self.preferred_based_on_cost_price
       if !variant.cost_price.nil? && variant.cost_price > 0
         variant.cost_price * (1 + part)
       else
-        variant.price
+        original_price
       end
     else
-      variant.price * (1 - part)
+      original_price * (1 - part)
     end
   end
 end

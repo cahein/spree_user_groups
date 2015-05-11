@@ -1,6 +1,4 @@
 Spree::Variant.class_eval do
-  include ActionView::Helpers
-
   def price_for_user(user)
     if user && user.user_group
       user.user_group.price_for_variant(self) || price
@@ -9,20 +7,24 @@ Spree::Variant.class_eval do
     end
   end
 
+
   def price
     return 0 if new_record?
 
-    if Spree::User.current.nil? or Spree::User.current.user_group.nil? then
-      return prices.first.amount.to_f unless prices.first.blank? || prices.first.amount.blank?
-      return product.prices.first.amount.to_f unless product.blank? || product.prices.any?
-      return 0
+    oprice = 0
+    if prices.first && !prices.first.amount
+      oprice = prices.first.amount.to_f
+    elsif product && product.prices.any?
+      oprice = product.prices.first.amount.to_f
     end
 
-    Spree::User.current.user_group.price_for_variant(self) || prices.first.amount.to_f
+    if Spree::User.current and Spree::User.current.user_group then
+      group_price(oprice)
+    end
+
   end
 
-  #TODO-Proper fix for this hack :)
-  def price_in(currency)
-    Spree::Price.new(:amount => price, :currency => "USD")
+  def group_price(oprice)
+    Spree::User.current.user_group.price_for_variant(self, oprice) || prices.first.amount.to_f
   end
 end
