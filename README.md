@@ -5,6 +5,9 @@ Introduces user groups and calculator to add adjustment for specified user group
 
 *PROCEED WITH CAUTION:* This has been updated to display correctly in 2.4, but I have not verified functionality
 
+This fork will calculate the advanced_flat_percent price for user groups if they are logged in. It will not update the order line item prices for variants added to the cart before logging in.
+
+
 Installation
 ============
 

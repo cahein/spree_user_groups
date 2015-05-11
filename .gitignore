@@ -8,4 +8,7 @@ tmp
 nbproject
 *.swp
 spec/test_app
+spec/dummy
+coverage
 Gemfile
+Gemfile.lock

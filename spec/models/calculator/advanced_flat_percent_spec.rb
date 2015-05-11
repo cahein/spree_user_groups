@@ -39,20 +39,21 @@ describe 'Spree::Calculator::AdvancedFlatPercent based on cost_price' do
       variant1.stub :cost_price => 2.7
       variant2.stub :cost_price => 12.35
       calculator.compute(order).should == -9.59 # -9.5875
-      
+
       variant1.stub :cost_price => 2.7
-      variant2.stub :cost_price => 12.25     
+      variant2.stub :cost_price => 12.25
       calculator.compute(order).should == -9.70 # -9.7025
     end
   end
 
   context "compute_item" do
+    original_price = 5
     it "should compute price correctly" do
-      calculator.compute_item(variant1).should == 3*1.15
+      calculator.compute_item(variant1, original_price).should == 3*1.15
       variant1.stub :cost_price => 2.7
-      calculator.compute_item(variant1).should == 2.7*1.15
+      calculator.compute_item(variant1, original_price).should == 2.7*1.15
       variant1.stub :cost_price => nil
-      calculator.compute_item(variant1).should == 5
+      calculator.compute_item(variant1, original_price).should == 5
     end
   end
 end
