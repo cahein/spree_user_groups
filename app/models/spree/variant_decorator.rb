@@ -7,7 +7,6 @@ Spree::Variant.class_eval do
     end
   end
 
-
   def price
     return 0 if new_record?
 
@@ -20,11 +19,14 @@ Spree::Variant.class_eval do
 
     if Spree::User.current and Spree::User.current.user_group then
       group_price(oprice)
+    else
+      oprice
     end
 
   end
 
   def group_price(oprice)
+    self.product.set_original_variant_price(oprice)
     Spree::User.current.user_group.price_for_variant(self, oprice) || prices.first.amount.to_f
   end
 end
