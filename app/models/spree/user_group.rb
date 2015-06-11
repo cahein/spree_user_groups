@@ -11,11 +11,11 @@ class Spree::UserGroup < ActiveRecord::Base
     calculator.description
   end
 
-  def price_for_variant(variant, original_price = 0)
+  def price_for_variant(variant)
     if calculator.is_a?(Spree::Calculator::PerVariantPricing)
       user_groups_variants.where(variant: variant).first.try(:price)
     else
-      calculator.compute_item(variant, original_price)
+      calculator.compute_item(variant)
     end
   end
 end
