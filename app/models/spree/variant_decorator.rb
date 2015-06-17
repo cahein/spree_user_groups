@@ -19,20 +19,20 @@ Spree::Variant.class_eval do
 
   def price
     return 0 if new_record?
-
     # TODO: multiple prices and currencies not covered yet
+    oprice = 0
     if prices.first && !prices.first.amount
-      set_original_price prices.first.amount.to_f
+      oprice = prices.first.amount.to_f
     elsif product && product.prices.any?
-      self.set_original_price product.prices.first.amount.to_f
+      oprice = product.prices.first.amount.to_f
     end
 
     if Spree::User.current and Spree::User.current.user_group then
+      set_original_price oprice
       group_price
     else
-      self.original_price
+      oprice
     end
-
   end
 
   def group_price
