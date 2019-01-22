@@ -18,11 +18,8 @@ module SpreeUserGroups
 
       if File.basename( $0 ) != "rake"
         begin
-          config.spree.calculators.add_class('user_groups')
-          config.spree.calculators.user_groups = [
-            Spree::Calculator::AdvancedFlatPercent,
-            Spree::Calculator::PerVariantPricing
-          ]
+          config.spree.calculators.user_groups << Spree::Calculator::AdvancedFlatPercent
+          config.spree.calculators.user_groups << Spree::Calculator::PerVariantPricing
         rescue Exception => e
           $stderr.puts "Error registering promotion calculator,#{e.message}"
         end
