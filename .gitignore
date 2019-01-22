@@ -10,3 +10,5 @@ nbproject
 spec/dummy
 coverage
 Gemfile.lock
+.ruby-version
+.ruby-gemset
