@@ -11,11 +11,11 @@ describe Spree::UserGroup do
   describe "#save" do
     let(:user_group_valid) { Spree::UserGroup.new :name => "Wholesaler", calculator: calculator }
 
-    context "when is invalid" do
+    context "when the object is invalid" do
       it { expect(user_group.save).to be false }
     end
 
-    context "when is valid" do
+    context "when the object is valid" do
       it { expect(user_group_valid.save).to be true }
     end
   end
